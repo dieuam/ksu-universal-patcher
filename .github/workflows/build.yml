@@ -151,6 +151,9 @@ jobs:
                 rm -rf *.tar.xz
             fi
 
+            # Setup compiler toolchain library PATH
+            export LD_LIBRARY_PATH="$(realpath ~/**/LLVM-*-Linux-X64)/lib:$(realpath ~/**/arm-gnu-toolchain-*-x86_64-aarch64-none-linux-gnu*)/lib:$(realpath ~/**/arm-gnu-toolchain-*-x86_64-arm-none-linux-gnu*)/lib:$LD_LIBRARY_PATH"
+
             # Install some general dependencies
             sudo apt-get install -y p7zip-full tar bzip2 unrar gzip zip unzip python3-dev repo
 
@@ -280,6 +283,10 @@ jobs:
           working-directory: './kernel-src'
           run: |
             shopt -s globstar
+
+            # Setup compiler toolchain library PATH
+            export LD_LIBRARY_PATH="$(realpath ~/**/LLVM-*-Linux-X64)/lib:$(realpath ~/**/arm-gnu-toolchain-*-x86_64-aarch64-none-linux-gnu*)/lib:$(realpath ~/**/arm-gnu-toolchain-*-x86_64-arm-none-linux-gnu*)/lib:$LD_LIBRARY_PATH"
+
             rm -f ./scripts/config; wget https://raw.githubusercontent.com/torvalds/linux/refs/heads/master/scripts/config -O ./scripts/config; chmod a+x ./scripts/config
 
             # Generate kernel config using make
@@ -344,6 +351,9 @@ jobs:
           working-directory: './kernel-src'
           run: |
             shopt -s globstar
+
+            # Setup compiler toolchain library PATH
+            export LD_LIBRARY_PATH="$(realpath ~/**/LLVM-*-Linux-X64)/lib:$(realpath ~/**/arm-gnu-toolchain-*-x86_64-aarch64-none-linux-gnu*)/lib:$(realpath ~/**/arm-gnu-toolchain-*-x86_64-arm-none-linux-gnu*)/lib:$LD_LIBRARY_PATH"
 
             # Compile using make
             if [ ${{ github.event.inputs.KERNEL_COMPILER }} == 'Clang/LLVM' ]; then
