@@ -143,6 +143,14 @@ jobs:
                 tar --wildcards -xvpf ./LLVM-latest-Linux-X64.tar.xz --warning=no-file-changed --ignore-failed-read || true
                 rm -rf *.tar.xz
             fi
+        - name: 'Set up environment variables'
+          run: |
+            # Thiết lập biến môi trường ANDROID_MAJOR_VERSION
+            export export PLATFORM_VERSION=11
+            echo "export PLATFORM_VERSION=11" >> $GITHUB_ENV
+            export ANDROID_MAJOR_VERSION=r
+            echo "ANDROID_MAJOR_VERSION=r" >> $GITHUB_ENV
+
 
             # Install GCC for aarch64 and arm(32)
             if grep -iqE "GCC|Binutils" <<< ${{ github.event.inputs.KERNEL_COMPILER }} && [ -z ${{ github.event.inputs.KERNEL_COMPILER_TOOLCHAIN }} ]; then
